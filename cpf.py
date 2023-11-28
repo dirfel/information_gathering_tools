@@ -1,5 +1,5 @@
 #!/bin/python3
-
+# Esse Script funciona na linha de comando 
 import re, sys, itertools
 
 def inserir_separadores(cpf):
