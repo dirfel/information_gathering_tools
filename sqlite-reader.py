@@ -1,3 +1,5 @@
+#!/bin/python3
+# esse script permite consultas a bancos de dados sqlite3 usando a linha de comando
 import sys
 import sqlite3
 
