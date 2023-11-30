@@ -1,0 +1,75 @@
+#!/bin/bash
+
+#Funcao que imprime as instrucoes de uso do programa
+function usage() {
+cat << EOF
+Uso: scan.sh target [-h] [--help] [tcp/udp] [top10/top100/top1000]
+
+Opcoes:
+-h, --help: Exibe este texto de ajuda.
+tcp: Realiza um scan TCP.
+udp: Realiza um scan UDP.
+top10: define que as top 10 portas serao escaneadas.
+top100: define que as top 100 portas serao escaneadas.
+top1000: define que as top 1000 portas serao escaneadas.
+
+Exemplos:
+scan.sh 192.168.1.1
+scan.sh 192.168.1.1 tcp
+scan.sh 192.168.1.1 udp 10
+EOF
+}
+
+#Verifica se o usuário passou o parâmetro -h ou --help
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+usage
+exit
+fi
+
+#Endereco IP do host alvo
+host=$1
+
+#Variáveis com as portas mais usadas
+top10="21 22 25 80 443 53 135 139 445 1433"
+top100="21 22 25 80 23 25 53 8080 443 3306 5432 2222 2525 110 143 993 995 2566 135 631 139 445 69 514 123 137 138 800 464 500 1433 4444 1000 2049 1723 1720 502 1025 1026 1027 1028 1352 1353 1354 1355 1356 1357 1358 1359 1360 1361 1362 1363 1364 1365 1366 1367 1368 1369 1370 1371 1372 1373 1374 1375 1376 1377 1378 1379 1380 1381 1382 1383 1384 1385 1386 1387 1388 1389 1390 1391 1392 1393 1394 1395 1396 1397 1398 1399 1400 1401 1402 1403 1404 1405 1406 1407 1408 1409 1410 1411 1412 1413 1414 1415 1416 1417 1418 1419 1420 1421 1422 1423 1424 1425 1426 1427 1428 1429 1430 1431 1432 1433 1434 1435 1436 1437 1438 1439 1440 1441 1442 1443 1444 1445 1446 1447 1448 1449 1450 1451 1452 1453 1454 1455 1456 1457 1458 1459 1460 1461 1462 1463 1464 1465 1466 1467 1468 1469 1470 1471 1472 1473 1474 1475 1476 1477 1478 1479 1480 1481 1482 1483 1484 1485 1486 1487 1488 1489 1490 1491 1492 1493 1494 1495 1496 1497 1498 1499 1500"
+top1000="21 22 25 80 23 25 53 8080 443 3306 5432 2222 2525 110 143 993 995 2566 135 631 139 445 69 514 123 137 138 800 464 500 1433 4444 1000 2049 1723 1720 502 1025 1026 1027 1028 1352 1353 1354 1355 1356 1357 1358 1359 1360 1361 1362 1363 1364 1365 1366 1367 1368 1369 1370 1371 1372 1373 1374 1375 1376 1377 1378 1379 1380 1381 1382 1383 1384 1385 1386 1387 1388 1389 1390 1391 1392 1393 1394 1395 1396 1397 1398 1399 1400 1401 1402 1403 1404 1405 1406 1407 1408 1409 1410 1411 1412 1413 1414 1415 1416 1417 1418 1419 1420 1421 1422 1423 1424 1425 1426 1427 1428 1429 1430 1431 1432 1433 1434 1435 1436 1437 1438 1439 1440 1441 1442 1443 1444 1445 1446 1447 1448 1449 1450 1451 1452 1453 1454 1455 1456 1457 1458 1459 1460 1461 1462 1463 1464 1465 1466 1467 1468 1469 1470 1471 1472 1473 1474 1475 1476 1477 1478 1479 1480 1481 1482 1483 1484 1485 1486 1487 1488 1489 1490 1491 1492 1493 1494 1495 1496 1497 1498 1499 1500"
+
+#Verifica se o parametro foi passado
+if [ -z "$3" ]; then
+#Se não foi passado, usa as top 100 portas
+ports=$top100
+echo "Escaneando as Top 100 portas"
+elif [ "$3" == "top10" ]; then
+ports=$top10
+echo "Escaneando as Top 10 portas"
+elif [ "$3" == "top1000" ]; then
+ports=$top1000
+echo "Escaneando as Top 1000 portas"
+else
+# Se nÃ£o for nenhuma das variaveis
+ports=$top100
+echo "Escaneando as Top 100 portas"
+fi
+
+#Verifica qual protocolo o usuÃ¡rio deseja usar
+if [ "$2" == "tcp" ]; then
+protocol="t"
+echo "Protocolo escolhido: TCP"
+elif [ "$2" == "udp" ]; then
+protocol="u"
+echo "Protocolo escolhido: UDP"
+else
+# Se não foi especificado, usa TCP
+protocol="t"
+echo "Protocolo escolhido: TCP"
+fi
+
+#Percorre as portas
+for port in $ports; do
+timeout 1 nc -$protocol -zv $host $port 2> /dev/null
+if [ $? -eq 0 ]; then
+echo "[*] Porta $port aberta"
+else
+echo "[ ] Porta $port fechada"
+fi
+done
