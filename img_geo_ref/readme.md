@@ -7,7 +7,7 @@ Esse script simples busca por todas as imagens na pasta geo_ref_folder e retorna
 ## Requisitos:
 Python3
 pip
-python3-venv
+python3-venv (opcional, mas recomendado)
 
 ## Após ter todos os requisitos:
 
@@ -15,8 +15,8 @@ python3-venv
 
 No terminal, execute os comandos:
 
-python3 -m venv venv
-source /venv/bin/activate
+python3 -m venv venv #opcional, mas recomendado
+source /venv/bin/activate #opcional, mas recomendado
 
 ### instalar bibliotecas necessárias
 
