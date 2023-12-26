@@ -149,8 +149,8 @@ if tipo == 'CPF':
     if validade:
         print("Esse CPF é válido.")
         print(gerar_estados(entrada))
-        print("Portal Transparíªncia (BR): ", "https://portaldatransparencia.gov.br/pessoa-fisica/busca/lista?termo="+entrada+"&pagina=1&tamanhoPagina=10")
-        print("Situaí§ío cadastral CPF: ", "https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp")
+        print("Portal Transparência (BR): ", "https://portaldatransparencia.gov.br/pessoa-fisica/busca/lista?termo="+entrada+"&pagina=1&tamanhoPagina=10")
+        print("Situação cadastral CPF: ", "https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp")
         print("Tudo sobre todos: ", "https://tudosobretodos.info/" + entrada)
         print("Dorks interessantes:")
         print("https://www.google.com/search?q=%22"+inserir_separadores(entrada)+"%22+jusbrasil&ei=ddMoZdKBGp7d1sQP5auSyAM&oq=%22"+inserir_separadores(entrada)+"%22+jusbrasil")
